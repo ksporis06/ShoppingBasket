@@ -46,15 +46,4 @@ public class PriceCalculatorService {
 		
 		return shoppingBasketDiscounts;
 	}
-	
-//	public static void main(String[] args) {
-//		Double percentage = 10.33;
-//		Double base = 333.0;
-//		Double discountAmount = base*(percentage/100);
-//		Double total = base - discountAmount;
-//		
-//		System.out.println("discountAmount:"  + discountAmount);
-//		System.out.println("total:"  + total);
-//		System.out.println("check: " + (total + discountAmount) + "; base: " + base);
-//	}
 }
