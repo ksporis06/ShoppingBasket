@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,12 +28,12 @@ public class ShoppingBasketController {
 	private PriceCalculatorService priceCalculatorService;
 	
 	@PostMapping("/shopping_basket")
-	public ResponseEntity<ShoppingBasket> addProduct(@RequestBody List<ShoppingBasketRequest> request){
+	public ResponseEntity<ShoppingBasket> addProduct(@Valid @RequestBody ShoppingBasketRequest request){
 		
-		if(!checkIfProductsExist(request))
+		if(!checkIfProductsExist(request.getItems()))
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		
-		List<ShoppingBasketProduct> products = request.stream()
+		List<ShoppingBasketProduct> products = request.getItems().stream()
 			.map(pq -> new ShoppingBasketProduct(productService.getProduct(pq.getId()).get(), pq.getQuantity()))
 			.collect(Collectors.toList());
 		
@@ -48,8 +50,8 @@ public class ShoppingBasketController {
 		return new ResponseEntity<ShoppingBasket>(shoppingBasket, HttpStatus.OK);
 	}
 	
-	private Boolean checkIfProductsExist(List<ShoppingBasketRequest> request) {
-		Optional<Long> missingProductId = request.stream()
+	private Boolean checkIfProductsExist(List<ShoppingBasketItems> items) {
+		Optional<Long> missingProductId = items.stream()
 				.map(pq -> pq.getId())
 				.filter(pId -> !productService.getProduct(pId).isPresent())
 				.findFirst();

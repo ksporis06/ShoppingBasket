@@ -1,6 +1,8 @@
 package hr.example.shoppingbasket.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,12 +28,6 @@ public class ProductService {
 		return productRepository.findById(id);
 	}
 	
-	public Optional<Product> getProductByName(String name){
-		return getAllProducts().stream()
-				.filter(product -> product.getName().equals(name))
-				.findAny();
-	}
-	
 	public Product addProduct(Product product){
 		return productRepository.save(product);
 	}
@@ -43,4 +39,5 @@ public class ProductService {
 	public void deleteProduct(Long id) {
 		productRepository.deleteById(id);
 	}
+	
 }

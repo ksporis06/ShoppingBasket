@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -29,6 +30,7 @@ public class Product {
 	private String name;
 	
 	@NotNull
+	@Min(value=0,message="Value must be positive")
 	private BigDecimal price;
 	
 	public Product(String name, BigDecimal price) {

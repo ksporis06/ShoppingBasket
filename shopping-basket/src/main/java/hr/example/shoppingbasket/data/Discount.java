@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -37,6 +38,7 @@ public class Discount {
 	private Product requiredProduct; 
 	
 	@NotNull
+	@Min(value=1,message="Value must be positive")
 	private Integer requiredProductQuantity;
 	
 	@NotNull
@@ -45,6 +47,7 @@ public class Discount {
 	private Product appliesToProduct;
 	
 	@NotNull
+	@Min(value=1,message="Value must be positive")
 	private BigDecimal discountPercentage;
 	
 	public Discount(String name, Product requiredProduct, Integer requiredProductQuantity,
